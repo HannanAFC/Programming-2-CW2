@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 // Product class
@@ -109,7 +108,7 @@ public class Main {
         frame.setVisible(true);
 
         // Add button functionality (reuse from original code)
-        addButton.addActionListener(e -> {
+        addButton.addActionListener(_ -> {
             try {
                 String name = nameField.getText().trim();
                 int quantity = Integer.parseInt(quantityField.getText().trim());
@@ -129,7 +128,7 @@ public class Main {
             }
         });
 
-        sellButton.addActionListener(e -> {
+        sellButton.addActionListener(_ -> {
             int selectedIndex = productList.getSelectedIndex();
             if (selectedIndex != -1) {
                 Product selectedProduct = inventory.get(selectedIndex);
@@ -156,7 +155,7 @@ public class Main {
             }
         });
 
-        reportButton.addActionListener(e -> {
+        reportButton.addActionListener(_ -> {
             StringBuilder report = new StringBuilder();
             report.append("Sales Summary:\nTotal Sales: £").append(totalSales).append("\n\n");
             report.append("Low Stock Items:\n");
