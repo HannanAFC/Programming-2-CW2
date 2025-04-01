@@ -1,104 +1,171 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+// Product class
+class Product {
+    private String name;
+    private int quantity;
+    private double price;
+
+    public Product(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (Qty: " + quantity + ", Price: £" + price + ")";
+    }
+}
+
+// Main class
 public class Main {
+    private static ArrayList<Product> inventory = new ArrayList<>();
+    private static double totalSales = 0;
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Smart Shop Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        frame.setSize(500, 400);
 
         SpringLayout layout = new SpringLayout();
         JPanel panel = new JPanel(layout);
 
-        JLabel taskLabel = new JLabel("Product");
-        JTextField taskField = new JTextField(15);
-        JButton addButton = new JButton("Add");
-        JButton updateButton = new JButton("Update");
-        JButton removeButton = new JButton("Remove");
-
-        // Create a list to display products
         DefaultListModel<String> productListModel = new DefaultListModel<>();
         JList<String> productList = new JList<>(productListModel);
-        JScrollPane taskPanel = new JScrollPane(productList);
+        JScrollPane listScrollPane = new JScrollPane(productList);
 
-        taskPanel.setPreferredSize(new Dimension(200, 100));
+        JTextField nameField = new JTextField(10);
+        JTextField quantityField = new JTextField(5);
+        JTextField priceField = new JTextField(5);
 
-        panel.add(taskLabel);
-        panel.add(taskField);
-        panel.add(addButton);
-        panel.add(Box.createRigidArea(new Dimension(20, 20)));
-        panel.add(updateButton);
-        panel.add(Box.createRigidArea(new Dimension(20, 20)));
-        panel.add(removeButton);
-        panel.add(taskPanel);
+        JButton addButton = new JButton("Add Product");
+        JButton sellButton = new JButton("Sell Product");
+        JButton reportButton = new JButton("Generate Report");
 
-        // Constraints for taskLabel
-        layout.putConstraint(SpringLayout.WEST, taskLabel, 10, SpringLayout.WEST, panel);
-        layout.putConstraint(SpringLayout.NORTH, taskLabel, 10, SpringLayout.NORTH, panel);
+        JLabel nameLabel = new JLabel("Name:");
+        JLabel quantityLabel = new JLabel("Quantity:");
+        JLabel priceLabel = new JLabel("Price:");
 
-        // Constraints for taskField
-        layout.putConstraint(SpringLayout.WEST, taskField, 10, SpringLayout.EAST, taskLabel);
-        layout.putConstraint(SpringLayout.NORTH, taskField, 10, SpringLayout.NORTH, panel);
+        // Add constraints for layout
+        layout.putConstraint(SpringLayout.WEST, nameLabel, 10, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, nameLabel, 10, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.WEST, nameField, 70, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, nameField, 10, SpringLayout.NORTH, panel);
 
-        // Constraints for addButton
-        layout.putConstraint(SpringLayout.WEST, addButton, 10, SpringLayout.EAST, taskField);
+        layout.putConstraint(SpringLayout.WEST, quantityLabel, 10, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, quantityLabel, 40, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.WEST, quantityField, 70, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, quantityField, 40, SpringLayout.NORTH, panel);
+
+        layout.putConstraint(SpringLayout.WEST, priceLabel, 10, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, priceLabel, 70, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.WEST, priceField, 70, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, priceField, 70, SpringLayout.NORTH, panel);
+
+        layout.putConstraint(SpringLayout.WEST, addButton, 250, SpringLayout.WEST, panel);
         layout.putConstraint(SpringLayout.NORTH, addButton, 10, SpringLayout.NORTH, panel);
-        // Constraints for updateButton
-        layout.putConstraint(SpringLayout.WEST, updateButton, 10, SpringLayout.EAST, taskField);
-        layout.putConstraint(SpringLayout.NORTH, updateButton, 50, SpringLayout.NORTH, panel);
-        // Constraints for removeButton
-        layout.putConstraint(SpringLayout.WEST, removeButton, 10, SpringLayout.EAST, taskField);
-        layout.putConstraint(SpringLayout.NORTH, removeButton, 90, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.WEST, sellButton, 250, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, sellButton, 40, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.WEST, reportButton, 250, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, reportButton, 70, SpringLayout.NORTH, panel);
 
-        // Constraints for taskPanel
-        layout.putConstraint(SpringLayout.WEST, taskPanel, 10, SpringLayout.WEST, panel);
-        layout.putConstraint(SpringLayout.NORTH, taskPanel, 100, SpringLayout.SOUTH, addButton);
-        layout.putConstraint(SpringLayout.EAST, taskPanel, -10, SpringLayout.EAST, panel);
-        layout.putConstraint(SpringLayout.SOUTH, taskPanel, -10, SpringLayout.SOUTH, panel);
+        layout.putConstraint(SpringLayout.WEST, listScrollPane, 10, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, listScrollPane, 100, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.EAST, listScrollPane, -10, SpringLayout.EAST, panel);
+        layout.putConstraint(SpringLayout.SOUTH, listScrollPane, -10, SpringLayout.SOUTH, panel);
 
-        // Button Functionality
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String product = taskField.getText().trim();
-                if (!product.isEmpty()) {
-                    productListModel.addElement(product);
-                    taskField.setText(""); // Clear the input field
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Please enter a product name.");
-                }
-            }
-        });
-
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedIndex = productList.getSelectedIndex();
-                String updatedProduct = taskField.getText().trim();
-                if (selectedIndex != -1 && !updatedProduct.isEmpty()) {
-                    productListModel.set(selectedIndex, updatedProduct);
-                    taskField.setText(""); // Clear the input field
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Please select a product to update and enter a valid name.");
-                }
-            }
-        });
-
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedIndex = productList.getSelectedIndex();
-                if (selectedIndex != -1) {
-                    productListModel.remove(selectedIndex);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Please select a product to remove.");
-                }
-            }
-        });
+        // Add components to panel
+        panel.add(nameLabel);
+        panel.add(nameField);
+        panel.add(quantityLabel);
+        panel.add(quantityField);
+        panel.add(priceLabel);
+        panel.add(priceField);
+        panel.add(addButton);
+        panel.add(sellButton);
+        panel.add(reportButton);
+        panel.add(listScrollPane);
 
         frame.add(panel);
         frame.setVisible(true);
+
+        // Add button functionality (reuse from original code)
+        addButton.addActionListener(e -> {
+            try {
+                String name = nameField.getText().trim();
+                int quantity = Integer.parseInt(quantityField.getText().trim());
+                double price = Double.parseDouble(priceField.getText().trim());
+
+                if (!name.isEmpty() && quantity > 0 && price > 0) {
+                    inventory.add(new Product(name, quantity, price));
+                    productListModel.addElement(name);
+                    nameField.setText("");
+                    quantityField.setText("");
+                    priceField.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid product details.");
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Please enter valid numeric values for quantity and price.");
+            }
+        });
+
+        sellButton.addActionListener(e -> {
+            int selectedIndex = productList.getSelectedIndex();
+            if (selectedIndex != -1) {
+                Product selectedProduct = inventory.get(selectedIndex);
+                String input = JOptionPane.showInputDialog("Enter quantity to sell:");
+                try {
+                    int sellQuantity = Integer.parseInt(input.trim());
+                    if (sellQuantity > 0 && sellQuantity <= selectedProduct.getQuantity()) {
+                        selectedProduct.setQuantity(selectedProduct.getQuantity() - sellQuantity);
+                        totalSales += sellQuantity * selectedProduct.getPrice();
+                        if (selectedProduct.getQuantity() == 0) {
+                            inventory.remove(selectedIndex);
+                            productListModel.remove(selectedIndex);
+                        } else {
+                            productListModel.set(selectedIndex, selectedProduct.toString());
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Invalid quantity.");
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Please enter a valid number.");
+                
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select a product to sell.");
+            }
+        });
+
+        reportButton.addActionListener(e -> {
+            StringBuilder report = new StringBuilder();
+            report.append("Sales Summary:\nTotal Sales: £").append(totalSales).append("\n\n");
+            report.append("Low Stock Items:\n");
+            for (Product product : inventory) {
+                if (product.getQuantity() <= 5) {
+                    report.append(product).append("\n");
+                }
+            }
+            JOptionPane.showMessageDialog(frame, report.toString());
+        });
     }
 }
