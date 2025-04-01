@@ -150,7 +150,7 @@ public class Main {
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Please enter a valid number.");
-                
+                }
             } else {
                 JOptionPane.showMessageDialog(frame, "Please select a product to sell.");
             }
