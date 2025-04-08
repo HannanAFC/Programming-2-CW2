@@ -1,4 +1,10 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import javax.swing.*;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 // Product class
@@ -40,8 +46,23 @@ public class Main {
     private static ArrayList<Product> inventory = new ArrayList<>();
     private static double totalSales = 0;
 
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Smart Shop Management System");
+
+        try {
+            String status = readJSON();
+            if (status.equals("Inventory read successfully")) {
+                System.out.println(status);
+            }
+            else {
+                JOptionPane.showMessageDialog(frame, status);
+            }
+        }
+        catch (FileNotFoundException e ) {
+            JOptionPane.showMessageDialog(frame, "File not found and new one was not able to be created");
+        }
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400);
 
@@ -49,6 +70,9 @@ public class Main {
         JPanel panel = new JPanel(layout);
 
         DefaultListModel<String> productListModel = new DefaultListModel<>();
+        for (Product product : inventory) {
+            productListModel.addElement(product.toString());
+        }
         JList<String> productList = new JList<>(productListModel);
         JScrollPane listScrollPane = new JScrollPane(productList);
 
@@ -115,11 +139,17 @@ public class Main {
                 double price = Double.parseDouble(priceField.getText().trim());
 
                 if (!name.isEmpty() && quantity > 0 && price > 0) {
-                    inventory.add(new Product(name, quantity, price));
-                    productListModel.addElement(name);
+                    Product product = new Product(name, quantity, price);
+                    inventory.add(product);
+                    productListModel.addElement(product.toString());
                     nameField.setText("");
                     quantityField.setText("");
                     priceField.setText("");
+                    String writeStatus = writeJSON();
+                    if (!writeStatus.equals("Inventory written successfully")) {
+                        JOptionPane.showMessageDialog(frame, writeStatus);
+                    }
+                    System.out.println(writeStatus);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid product details.");
                 }
@@ -141,8 +171,19 @@ public class Main {
                         if (selectedProduct.getQuantity() == 0) {
                             inventory.remove(selectedIndex);
                             productListModel.remove(selectedIndex);
+                            String writeStatus = writeJSON();
+                            if (!writeStatus.equals("Inventory written successfully")) {
+                                JOptionPane.showMessageDialog(frame, writeStatus);
+                            }
+                            System.out.println(writeStatus);
                         } else {
                             productListModel.set(selectedIndex, selectedProduct.toString());
+                            String writeStatus;
+                            writeStatus = writeJSON();
+                            if (!writeStatus.equals("Inventory written successfully")) {
+                                JOptionPane.showMessageDialog(frame, writeStatus);
+                            }
+                            System.out.println(writeStatus);
                         }
                     } else {
                         JOptionPane.showMessageDialog(frame, "Invalid quantity.");
@@ -167,4 +208,52 @@ public class Main {
             JOptionPane.showMessageDialog(frame, report.toString());
         });
     }
+
+    public static String writeJSON() {
+        //creates a gson object, uses it to turn tasks array into a json string, then writes it to the file
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(inventory);
+        try {
+            FileWriter writer = new FileWriter("inventory.json");
+            writer.write(json);
+            writer.close();
+        }
+        catch (IOException e) {
+            return "Error writing to file";
+        }
+        return "Inventory written successfully";
+    }
+
+    public static String readJSON() throws FileNotFoundException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        File file = new File("inventory.json");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            }
+            catch (IOException e) {
+                String error = "Error creating file";
+            }
+            String error = "Warning - File not found, new file created.";
+            return error;
+        }
+        BufferedReader reader = new BufferedReader(new FileReader("inventory.json"));
+
+        //defines the type of data that will be read
+        Type listType = new TypeToken<ArrayList<Product>>() {}.getType();
+
+        /*
+        the tasks are read and added to an arraylist, this is then added to the empty tasks arraylist
+        error handling in case the file is empty
+        */
+        try {
+            ArrayList<Product> readTasks = gson.fromJson(reader, listType);
+            inventory.addAll(readTasks);
+        }
+        catch (NullPointerException e) {
+            return "Warning - File was empty.";
+        }
+        return "Inventory read successfully";
+    }
+
 }
