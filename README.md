@@ -3,14 +3,14 @@
 <h2>To-Do List</h2>
 <ul>
   <li>
-    Add an attribute to the product class to do with the stock sold amount.
+    Add an attribute to the product class to do with the stock sold amount (Mainly for Joel to do).
     <ul>
       <li>Update this whenever stock is sold.</li>
       <li>Make it so that the PDF creator checks said attribute, if it is not zero then display said item in the PDF.</li>
     </ul>
   </li>
   <li>
-    Convert the display to a table so that the product info can be shown in seperate columns.
+    Convert the display to a table so that the product info can be shown in seperate columns (Added this for James but anybody can do it if not done or just leaave it, not a huge deal).
     <ul>
       <li>Make the table.</li>
       <li>Make it uneditable.</li>
