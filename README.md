@@ -1,5 +1,15 @@
 
 <h1>Programming 2 - Shop Management System (Early)</h1>
+<h2>To-Do List</h2>
+<ul>
+  <li>
+    Add an attribute to the product class to do with the stock sold amount.
+    <ul>
+      <li>Update this whenever stock is sold.</li>
+      <li>Make it so that the PDF creator checks said attribute, if it is not zero then display said item in the PDF.</li>
+    </ul>
+  </li>
+</ul>
 <h2><u>Setting up IntelliJ</u></h2>
 <p>Install IntelliJ from <a href="https://www.jetbrains.com/idea/download/">here</a>. Select "Clone Repository".</p>
 <img alt="Clone repository" src="Documentation/images/Install-1.jpg">
