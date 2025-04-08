@@ -9,6 +9,15 @@
       <li>Make it so that the PDF creator checks said attribute, if it is not zero then display said item in the PDF.</li>
     </ul>
   </li>
+  <li>
+    Convert the display to a table so that the product info can be shown in seperate columns.
+    <ul>
+      <li>Make the table.</li>
+      <li>Make it uneditable.</li>
+      <li>Fix previous logic to add data to the different columns.</li>
+      <li>We may have to give products indexes to prevent things from going wrong somehow, so we could also add an index attribute to the product class, assign a valid index on product creation, add this as a hidden column on the table and refer to this when deleting products from the arraylist as well. I've got code for this from my CW1.3 so that can be used (on my GitHub).</li>
+    </ul>
+  </li>
 </ul>
 <h2><u>Setting up IntelliJ</u></h2>
 <p>Install IntelliJ from <a href="https://www.jetbrains.com/idea/download/">here</a>. Select "Clone Repository".</p>
