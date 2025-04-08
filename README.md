@@ -10,7 +10,7 @@
     </ul>
   </li>
   <li>
-    Convert the display to a table so that the product info can be shown in seperate columns (Added this for James but anybody can do it if not done or just leaave it, not a huge deal).
+    Convert the display to a table so that the product info can be shown in seperate columns (Added this for James but anybody can do it if not done or just leave it, not a necessary task).
     <ul>
       <li>Make the table.</li>
       <li>Make it uneditable.</li>
