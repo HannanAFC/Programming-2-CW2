@@ -25,5 +25,31 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file:///Volumes/Hannans USB/iText-Core-9.1.0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///Volumes/Hannans USB/iText-Core-9.1.0" />
+        </SOURCES>
+        <jarDirectory url="file:///Volumes/Hannans USB/iText-Core-9.1.0" recursive="false" />
+        <jarDirectory url="file:///Volumes/Hannans USB/iText-Core-9.1.0" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file:///Volumes/Hannans USB/sdlj4" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///Volumes/Hannans USB/sdlj4" />
+        </SOURCES>
+        <jarDirectory url="file:///Volumes/Hannans USB/sdlj4" recursive="false" />
+        <jarDirectory url="file:///Volumes/Hannans USB/sdlj4" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
