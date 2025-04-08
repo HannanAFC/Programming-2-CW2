@@ -108,7 +108,7 @@ public class Main {
         frame.setVisible(true);
 
         // Add button functionality (reuse from original code)
-        addButton.addActionListener(_ -> {
+        addButton.addActionListener(c -> {
             try {
                 String name = nameField.getText().trim();
                 int quantity = Integer.parseInt(quantityField.getText().trim());
@@ -128,7 +128,7 @@ public class Main {
             }
         });
 
-        sellButton.addActionListener(_ -> {
+        sellButton.addActionListener(c -> {
             int selectedIndex = productList.getSelectedIndex();
             if (selectedIndex != -1) {
                 Product selectedProduct = inventory.get(selectedIndex);
@@ -155,7 +155,7 @@ public class Main {
             }
         });
 
-        reportButton.addActionListener(_ -> {
+        reportButton.addActionListener(c -> {
             StringBuilder report = new StringBuilder();
             report.append("Sales Summary:\nTotal Sales: £").append(totalSales).append("\n\n");
             report.append("Low Stock Items:\n");
