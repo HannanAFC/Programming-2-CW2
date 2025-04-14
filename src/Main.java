@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
+import java.awt.*;
 // Product class
 class Product {
     private String name;
@@ -37,9 +37,22 @@ class Product {
 
     @Override
     public String toString() {
-        return name + " (Qty: " + quantity + ", Price: £" + price + ")";
+        //Logic to check stock level and return status of the stock
+        String stock;
+        switch (quantity) {
+            case 0:
+                stock = " (𝗢𝗨𝗧 𝗢𝗙 𝗦𝗧𝗢𝗖𝗞!)";
+                break;
+            case 1, 2, 3, 4:
+                stock = " (𝗟𝗼𝘄 𝗦𝘁𝗼𝗰𝗸)";
+                break;
+            default:
+                stock = " (𝗜𝗻 𝘀𝘁𝗼𝗰𝗸)";
+
+        }
+        return name + stock + " Quantity: " + quantity + " Price: £" + price;
     }
-}
+    }
 
 // Main class
 public class Main {
@@ -49,7 +62,6 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Smart Shop Management System");
-
         try {
             String status = readJSON();
             if (status.equals("Inventory read successfully")) {
@@ -208,7 +220,6 @@ public class Main {
             JOptionPane.showMessageDialog(frame, report.toString());
         });
     }
-
     public static String writeJSON() {
         //creates a gson object, uses it to turn tasks array into a json string, then writes it to the file
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -223,7 +234,6 @@ public class Main {
         }
         return "Inventory written successfully";
     }
-
     public static String readJSON() throws FileNotFoundException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         File file = new File("inventory.json");
@@ -242,10 +252,8 @@ public class Main {
         //defines the type of data that will be read
         Type listType = new TypeToken<ArrayList<Product>>() {}.getType();
 
-        /*
-        the tasks are read and added to an arraylist, this is then added to the empty tasks arraylist
-        error handling in case the file is empty
-        */
+        /*the tasks are read and added to an arraylist, this is then added to the empty tasks arraylist
+        error handling in case the file is empty */
         try {
             ArrayList<Product> readTasks = gson.fromJson(reader, listType);
             inventory.addAll(readTasks);
