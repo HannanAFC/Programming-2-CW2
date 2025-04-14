@@ -2,6 +2,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+
 import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.Type;
@@ -95,6 +100,7 @@ public class Main {
         JButton addButton = new JButton("Add Product");
         JButton sellButton = new JButton("Sell Product");
         JButton reportButton = new JButton("Generate Report");
+        JButton pdfButton = new JButton("Create PDF");
 
         JLabel nameLabel = new JLabel("Name:");
         JLabel quantityLabel = new JLabel("Quantity:");
@@ -127,6 +133,8 @@ public class Main {
         layout.putConstraint(SpringLayout.NORTH, listScrollPane, 100, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.EAST, listScrollPane, -10, SpringLayout.EAST, panel);
         layout.putConstraint(SpringLayout.SOUTH, listScrollPane, -10, SpringLayout.SOUTH, panel);
+        layout.putConstraint(SpringLayout.WEST, pdfButton, 250, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, pdfButton, 100, SpringLayout.NORTH, panel);
 
         // Add components to panel
         panel.add(nameLabel);
@@ -138,6 +146,7 @@ public class Main {
         panel.add(addButton);
         panel.add(sellButton);
         panel.add(reportButton);
+        panel.add(pdfButton);
         panel.add(listScrollPane);
 
         frame.add(panel);
@@ -218,6 +227,29 @@ public class Main {
                 }
             }
             JOptionPane.showMessageDialog(frame, report.toString());
+        });
+
+        pdfButton.addActionListener(e -> {
+            try {
+                PdfWriter writer = new PdfWriter(new FileOutputStream("SalesReport.pdf"));
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf);
+
+                document.add(new Paragraph("Sales Summary"));
+                document.add(new Paragraph("Total Sales: £" + totalSales));
+                document.add(new Paragraph("\nLow Stock Items:"));
+
+                for (Product product : inventory) {
+                    if (product.getQuantity() <= 5) {
+                        document.add(new Paragraph(product.toString()));
+                    }
+                }
+
+                document.close();
+                JOptionPane.showMessageDialog(frame, "PDF created successfully.");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Error creating PDF: " + ex.getMessage());
+            }
         });
     }
     public static String writeJSON() {

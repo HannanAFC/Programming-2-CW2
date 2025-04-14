@@ -10,7 +10,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../json-20250107.jar!/" />
+          <root url="jar://$MODULE_DIR$/dependencies/gson-2.12.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,10 +19,36 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../gson-2.12.1.jar!/" />
+          <root url="file://$MODULE_DIR$/dependencies/iText-Core-9.1.0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/dependencies/iText-Core-9.1.0" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/dependencies/iText-Core-9.1.0" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/dependencies/iText-Core-9.1.0" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/dependencies/json-20250107.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/dependencies/sdlj4" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/dependencies/sdlj4" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/dependencies/sdlj4" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/dependencies/sdlj4" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
