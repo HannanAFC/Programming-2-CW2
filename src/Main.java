@@ -17,11 +17,13 @@ class Product {
     private String name;
     private int quantity;
     private double price;
+    private int initialQuantity;
 
-    public Product(String name, int quantity, double price) {
+    public Product(String name, int quantity, double price, int initialQuantity) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        this.initialQuantity = quantity;
     }
 
     public String getName() {
@@ -39,7 +41,9 @@ class Product {
     public double getPrice() {
         return price;
     }
-
+    public int getStockSold() {
+        return initialQuantity - quantity;
+    }
     @Override
     public String toString() {
         //Logic to check stock level and return status of the stock
@@ -55,7 +59,7 @@ class Product {
                 stock = " (𝗜𝗻 𝘀𝘁𝗼𝗰𝗸)";
 
         }
-        return name + stock + " Quantity: " + quantity + " Price: £" + price;
+        return name + " | " + stock + " | Quantity: " + quantity + " | Price: £" + price + " | Stock sold: " + getStockSold() + " units ";
     }
     }
 
