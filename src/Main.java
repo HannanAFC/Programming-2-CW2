@@ -86,11 +86,12 @@ public class Main {
         SpringLayout layout = new SpringLayout();
         JPanel panel = new JPanel(layout);
 
-        DefaultListModel<String> productListModel = new DefaultListModel<>();
+        DefaultListModel<Product> productListModel = new DefaultListModel<>();
         for (Product product : inventory) {
-            productListModel.addElement(product.toString());
+            productListModel.addElement(product);
         }
-        JList<String> productList = new JList<>(productListModel);
+        JList<Product> productList = new JList<>(productListModel);
+        productList.setCellRenderer(new ProductListRenderer());
         JScrollPane listScrollPane = new JScrollPane(productList);
 
         JTextField nameField = new JTextField(10);
@@ -162,7 +163,7 @@ public class Main {
                 if (!name.isEmpty() && quantity > 0 && price > 0) {
                     Product product = new Product(name, quantity, price);
                     inventory.add(product);
-                    productListModel.addElement(product.toString());
+                    productListModel.addElement(product);
                     nameField.setText("");
                     quantityField.setText("");
                     priceField.setText("");
@@ -198,7 +199,7 @@ public class Main {
                             }
                             System.out.println(writeStatus);
                         } else {
-                            productListModel.set(selectedIndex, selectedProduct.toString());
+                            productListModel.set(selectedIndex, selectedProduct);
                             String writeStatus;
                             writeStatus = writeJSON();
                             if (!writeStatus.equals("Inventory written successfully")) {
@@ -228,7 +229,6 @@ public class Main {
             }
             JOptionPane.showMessageDialog(frame, report.toString());
         });
-
         pdfButton.addActionListener(e -> {
             try {
                 PdfWriter writer = new PdfWriter(new FileOutputStream("SalesReport.pdf"));
@@ -294,6 +294,28 @@ public class Main {
             return "Warning - File was empty.";
         }
         return "Inventory read successfully";
+    }
+    //Changes colour of list object to red if product is out of stock
+    public static class ProductListRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(
+            JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        JLabel productColour = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        if (value instanceof Product product) {
+            if (isSelected) {
+                productColour.setBackground(list.getSelectionBackground());
+                productColour.setForeground(list.getSelectionForeground());
+            } else {
+                if (product.getQuantity() == 0) {
+                    productColour.setForeground(Color.RED);
+                } else {
+                    productColour.setForeground(Color.BLACK);
+                }
+                productColour.setBackground(list.getBackground());
+            }
+        }
+        return productColour;
+            }
     }
 
 }
