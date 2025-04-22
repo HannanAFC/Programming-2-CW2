@@ -2,18 +2,19 @@
 <h1>Programming 2 - Shop Management System (Early)</h1>
 <h2>To-Do List</h2>
 <ul>
-  <s><li>
-    Add an attribute to the product class to do with the stock sold amount (Mainly for Joel to do).
-    <ul>
+  <li>
+    <s>Add an attribute to the product class to do with the stock sold amount (Mainly for Joel to do).</s>
+    <ul><s>
       <li>Update this whenever stock is sold.</li>
       <li>Make it so that the PDF creator checks said attribute, if it is not zero then display said item in the PDF.</li>
+      </s>
     </ul>
-  </li></s>
+  </li>
   <li>
-    Convert the display to a table so that the product info can be shown in seperate columns (Added this for James but anybody can do it if not done or just leave it, not a necessary task).
+    Convert the display to a table so that the product info can be shown in separate columns (Added this for James but anybody can do it if not done or just leave it, not a necessary task).
     <ul>
       <li>Make the table.</li>
-      <li>Make it uneditable.</li>
+      <li>Make it not editable.</li>
       <li>Fix previous logic to add data to the different columns.</li>
       <li>We may have to give products indexes to prevent things from going wrong somehow, so we could also add an index attribute to the product class, assign a valid index on product creation, add this as a hidden column on the table and refer to this when deleting products from the arraylist as well. I've got code for this from my CW1.3 so that can be used (on my GitHub).</li>
     </ul>
@@ -22,7 +23,7 @@
 <h2><u>Setting up IntelliJ</u></h2>
 <p>Install IntelliJ from <a href="https://www.jetbrains.com/idea/download/">here</a>. Select "Clone Repository".</p>
 <img alt="Clone repository" src="Documentation/images/Install-1.jpg">
-<p>Select "Programming-2-CW2" from the menu, you may have to login to GitHub for this option to show.</p>
+<p>Select "Programming-2-CW2" from the menu, you may have to log in to GitHub for this option to show.</p>
 <img alt="Select from menu" src="Documentation/images/Install-2.jpg">
 <p>The IDE may not let you run the Java files or may not even show the src directory, to fix this, navigate to the hamburger menu -> FIle -> Repair IDE.</p>
 <img alt="Repair IDE" src="Documentation/images/Install-3.jpg">

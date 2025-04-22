@@ -1,14 +1,14 @@
 class Product {
-    private String name;
+    private final String name;
     private int quantity;
-    private double price;
-    private int initialQuantity;
+    private final double price;
+    private final int initialQuantity;
 
     public Product(String name, int quantity, double price, int initialQuantity) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
-        this.initialQuantity = quantity;
+        this.initialQuantity = initialQuantity;
     }
 
     public String getName() {
@@ -26,25 +26,23 @@ class Product {
     public double getPrice() {
         return price;
     }
+
+    public int getInitialQuantity() {
+        return initialQuantity;
+    }
+
     public int getStockSold() {
-        return initialQuantity - quantity;
+        return getInitialQuantity() - getQuantity();
     }
     @Override
     public String toString() {
         //Logic to check stock level and return status of the stock
-        String stock;
-        switch (quantity) {
-            case 0:
-                stock = " (𝗢𝗨𝗧 𝗢𝗙 𝗦𝗧𝗢𝗖𝗞!)";
-                break;
-            case 1, 2, 3, 4:
-                stock = " (𝗟𝗼𝘄 𝗦𝘁𝗼𝗰𝗸)";
-                break;
-            default:
-                stock = " (𝗜𝗻 𝘀𝘁𝗼𝗰𝗸)";
-
-        }
-        return name + " | " + stock + " | Quantity: " + quantity + " | Price: £" + price + " | Stock sold: " + getStockSold() + " units ";
+        String stock = switch (quantity) {
+            case 0 -> " (𝗢𝗨𝗧 𝗢𝗙 𝗦𝗧𝗢𝗖𝗞!)";
+            case 1, 2, 3, 4 -> " (𝗟𝗼𝘄 𝗦𝘁𝗼𝗰𝗸)";
+            default -> " (𝗜𝗻 𝘀𝘁𝗼𝗰𝗸)";
+        };
+        return name + " | Current stock:  " + stock + " | Quantity: " + quantity + " | Price: £" + price + " | Stock sold: " + getStockSold() + " units ";
     }
 
     public String saleAmount() {

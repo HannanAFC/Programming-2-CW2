@@ -16,7 +16,7 @@ import java.awt.*;
 
 // Main class
 public class Main {
-    private static ArrayList<Product> inventory = new ArrayList<>();
+    private static final ArrayList<Product> inventory = new ArrayList<>();
     private static double totalSales = 0;
 
 
