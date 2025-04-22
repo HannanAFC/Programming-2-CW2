@@ -13,55 +13,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.awt.*;
 // Product class
-class Product {
-    private String name;
-    private int quantity;
-    private double price;
-    private int initialQuantity;
-
-    public Product(String name, int quantity, double price, int initialQuantity) {
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price;
-        this.initialQuantity = quantity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-    public int getStockSold() {
-        return initialQuantity - quantity;
-    }
-    @Override
-    public String toString() {
-        //Logic to check stock level and return status of the stock
-        String stock;
-        switch (quantity) {
-            case 0:
-                stock = " (𝗢𝗨𝗧 𝗢𝗙 𝗦𝗧𝗢𝗖𝗞!)";
-                break;
-            case 1, 2, 3, 4:
-                stock = " (𝗟𝗼𝘄 𝗦𝘁𝗼𝗰𝗸)";
-                break;
-            default:
-                stock = " (𝗜𝗻 𝘀𝘁𝗼𝗰𝗸)";
-
-        }
-        return name + " | " + stock + " | Quantity: " + quantity + " | Price: £" + price + " | Stock sold: " + getStockSold() + " units ";
-    }
-    }
 
 // Main class
 public class Main {
@@ -135,7 +86,7 @@ public class Main {
         layout.putConstraint(SpringLayout.NORTH, reportButton, 70, SpringLayout.NORTH, panel);
 
         layout.putConstraint(SpringLayout.WEST, listScrollPane, 10, SpringLayout.WEST, panel);
-        layout.putConstraint(SpringLayout.NORTH, listScrollPane, 100, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.NORTH, listScrollPane, 130, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.EAST, listScrollPane, -10, SpringLayout.EAST, panel);
         layout.putConstraint(SpringLayout.SOUTH, listScrollPane, -10, SpringLayout.SOUTH, panel);
         layout.putConstraint(SpringLayout.WEST, pdfButton, 250, SpringLayout.WEST, panel);
@@ -165,7 +116,7 @@ public class Main {
                 double price = Double.parseDouble(priceField.getText().trim());
 
                 if (!name.isEmpty() && quantity > 0 && price > 0) {
-                    Product product = new Product(name, quantity, price);
+                    Product product = new Product(name, quantity, price, quantity);
                     inventory.add(product);
                     productListModel.addElement(product);
                     nameField.setText("");
@@ -244,9 +195,7 @@ public class Main {
                 document.add(new Paragraph("\nLow Stock Items:"));
 
                 for (Product product : inventory) {
-                    if (product.getQuantity() <= 5) {
-                        document.add(new Paragraph(product.toString()));
-                    }
+                    document.add(new Paragraph(product.saleAmount()));
                 }
 
                 document.close();

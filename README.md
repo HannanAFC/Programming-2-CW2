@@ -2,13 +2,13 @@
 <h1>Programming 2 - Shop Management System (Early)</h1>
 <h2>To-Do List</h2>
 <ul>
-  <li>
+  <s><li>
     Add an attribute to the product class to do with the stock sold amount (Mainly for Joel to do).
     <ul>
       <li>Update this whenever stock is sold.</li>
       <li>Make it so that the PDF creator checks said attribute, if it is not zero then display said item in the PDF.</li>
     </ul>
-  </li>
+  </li></s>
   <li>
     Convert the display to a table so that the product info can be shown in seperate columns (Added this for James but anybody can do it if not done or just leave it, not a necessary task).
     <ul>
