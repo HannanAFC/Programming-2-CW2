@@ -192,7 +192,6 @@ public class Main {
 
                 document.add(new Paragraph("Sales Summary"));
                 document.add(new Paragraph("Total Sales: £" + totalSales));
-                document.add(new Paragraph("\nLow Stock Items:"));
 
                 for (Product product : inventory) {
                     document.add(new Paragraph(product.saleAmount()));
